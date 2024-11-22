@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Bibliotečki Sistem</h1>
+    <nav class="nav-menu">
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">Odjava</button>
+        </form>
+    </nav>
+</header>
+<h1>List of Books</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Authors</th>
+        <th sec:authorize="hasRole('ROLE_ADMIN')">Categories</th>
+        <th sec:authorize="hasRole('ROLE_ADMIN')">Buttons</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="book : ${books}">
+        <td th:text="${book.title}">Book Title</td>
+        <td th:text="${book.description}">Description</td>
+        <td>
+                <span th:each="author, iterStat : ${book.authors}">
+                    <span th:text="${author.name}">Author Name</span>
+                    <span th:if="${!iterStat.last}">, </span>
+                </span>
+        </td>
+        <td>
+                <span th:each="category, iterStat : ${book.categories}">
+                    <span th:text="${category.name}">Category Name</span>
+                    <span th:if="${!iterStat.last}">, </span>
+                </span>
+        </td>
+        <td>
+
+            <span sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/books/edit/{id}(id=${book.id})}">Edit</a>
+                <form action="#" th:action="@{/books/delete/{id}(id=${book.id})}" method="post" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<span sec:authorize="hasRole('ROLE_ADMIN')">
+    <a th:href="@{/books/add}">Add</a>
+</span>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Add New Book</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+
+<header>
+    <h1>Bibliotečki Sistem</h1>
+    <nav class="nav-menu">
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">Odjava</button>
+        </form>
+    </nav>
+</header>
+<form th:action="@{/books/add}" th:object="${book}" method="post">
+    <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title" th:field="*{title}" required />
+    </div>
+    <div>
+        <label for="description">Description:</label>
+        <textarea id="description" th:field="*{description}"></textarea>
+    </div>
+
+    <div>
+        <label>Author:</label>
+        <select th:field="*{authors}" name="authorOption" id="authorSelect">
+            <option value="">-- Select an existing author --</option>
+            <option th:each="author : ${authors}" th:value="${author.id}" th:text="${author.name}"></option>
+        </select>
+    </div>
+
+    <div>
+        <input type="radio" name="authorOption" value="new" id="newAuthorRadio" />
+        <label for="newAuthorRadio">New Author Name</label>
+        <input type="text" name="newAuthorName" placeholder="New Author Name" id="newAuthorName" disabled/>
+    </div>
+
+    <input type="hidden" name="authorOptionHidden" id="authorOptionHidden" value="existing" />
+
+    <button type="submit">Save</button>
+</form>
+<a href="#" th:href="@{/books/}">Cancel</a>
+
+<script>
+    document.getElementById('authorSelect').addEventListener('change', function () {
+        var authorOptionHidden = document.getElementById('authorOptionHidden');
+        if (this.value) {
+            authorOptionHidden.value = 'existing';  // Mark as 'existing' if an author is selected
+            document.getElementById('newAuthorName').disabled = true;  // Disable the new author field
+        } else {
+            authorOptionHidden.value = '';  // Clear value if no author is selected
+            document.getElementById('newAuthorName').disabled = false;  // Enable the new author field
+        }
+    });
+
+    document.getElementById('newAuthorRadio').addEventListener('change', function () {
+        var authorOptionHidden = document.getElementById('authorOptionHidden');
+        if (this.checked) {
+            authorOptionHidden.value = 'new';  // Mark as 'new' if radio button is selected
+            document.getElementById('newAuthorName').disabled = false;  // Enable the new author field
+        }
+    });
+</script>
+
+</body>
+</html>

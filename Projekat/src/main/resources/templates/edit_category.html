@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Edit Category</title>
+  <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<header>
+  <h1>Bibliotečki Sistem</h1>
+  <nav class="nav-menu">
+    <form th:action="@{/logout}" method="post" class="logout-form">
+      <button type="submit" class="logout-btn">Odjava</button>
+    </form>
+  </nav>
+</header>
+<h1>Edit Book</h1>
+
+<form action="#" th:action="@{/category/edit/{id}(id=${category.id})}" th:object="${category}" method="post">
+  <label for="name">Name:</label>
+  <input type="text" id="name" th:field="*{name}" required/>
+  <br/>
+
+  <button type="submit">Update Category</button>
+  <a href="#" th:href="@{/category/}">Cancel</a>
+</form>
+</body>
+</html>

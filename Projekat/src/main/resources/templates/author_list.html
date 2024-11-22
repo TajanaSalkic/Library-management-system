@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Bibliotečki Sistem</h1>
+    <nav class="nav-menu">
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">Odjava</button>
+        </form>
+    </nav>
+</header>
+<h1>List of Authors</h1>
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Books</th>
+        <th sec:authorize="hasRole('ROLE_ADMIN')">Buttons</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="author : ${authors}">
+        <td th:text="${author.name}">Author name</td>
+        <td>
+                <span th:each="books, iterStat : ${author.books}">
+                    <span th:text="${books.title}">Book Title</span>
+                    <span th:if="${!iterStat.last}">, </span>
+                </span>
+        </td>
+
+        <td>
+
+        <td>
+            <span sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/authors/edit/{id}(id=${author.id})}">Edit</a>
+                <form action="#" th:action="@{/authors/delete/{id}(id=${author.id})}" method="post" style="display:inline;">
+                    <button type="submit">Delete</button>
+                </form>
+            </span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<span sec:authorize="hasRole('ROLE_ADMIN')">
+    <a th:href="@{/authors/add}">Add Author</a>
+
+</span>
+</body>
+</html>

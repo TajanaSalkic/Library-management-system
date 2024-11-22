@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Book</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<header>
+    <h1>Bibliotečki Sistem</h1>
+    <nav class="nav-menu">
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">Odjava</button>
+        </form>
+    </nav>
+</header>
+<h1>Edit Book</h1>
+
+<form action="#" th:action="@{/books/edit/{id}(id=${book.id})}" th:object="${book}" method="post">
+    <label for="title">Title:</label>
+    <input type="text" id="title" th:field="*{title}" required/>
+    <br/>
+
+    <label for="description">Description:</label>
+    <textarea id="description" th:field="*{description}" required></textarea>
+    <br/>
+
+    <h3>Authors:</h3>
+    <div th:each="author : ${book.getAuthors()}">
+        <label>
+            <input type="checkbox" th:checked="${#lists.contains(book.authors, author)}"
+                   th:value="${author.id}" th:name="'authors'" />
+            <span th:text="${author.name}"></span>
+        </label>
+        <br/>
+    </div>
+
+    <button type="submit">Update Book</button>
+    <a href="#" th:href="@{/books/}">Cancel</a>
+</form>
+</body>
+</html>

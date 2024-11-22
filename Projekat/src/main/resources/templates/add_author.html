@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Add New Author</title>
+  <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+<header>
+  <h1>Bibliotečki Sistem</h1>
+  <nav class="nav-menu">
+    <form th:action="@{/logout}" method="post" class="logout-form">
+      <button type="submit" class="logout-btn">Odjava</button>
+    </form>
+  </nav>
+</header>
+
+<h1>Add New Author</h1>
+
+<form th:action="@{/authors/add}" th:object="${author}" method="post">
+  <label for="name">Name:</label>
+  <input type="text" th:field="*{name}" id="name"/>
+  <button type="submit">Submit</button>
+</form>
+<a href="#" th:href="@{/books/}">Cancel</a>
+</body>
+</html>
