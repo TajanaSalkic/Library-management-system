@@ -1,0 +1,258 @@
+:root {
+    --primary-color: #704F3F;
+    --secondary-color: #856A5D;
+    --accent-color: #D4A373;
+    --text-color: #333;
+    --light-bg: #FAF0E6;
+    --card-bg: rgba(255, 255, 255, 0.95);
+    --shadow-light: 0 10px 20px rgba(0, 0, 0, 0.1);
+    --shadow-hover: 0 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: var(--light-bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.2rem 1.5rem; /* Reduced padding for a shorter header */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow-light);
+}
+
+h1 {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+}
+
+.logout-btn {
+    background-color: transparent;
+    border: 2px solid white;
+    color: white;
+    padding: 0.8rem 1.5rem;
+    cursor: pointer;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.logout-btn:hover {
+    background-color: white;
+    color: var(--primary-color);
+}
+
+.logout-form {
+    margin: 2rem auto !important;
+    max-width: 600px !important;
+    box-shadow: var(--shadow-light)!important;
+    border-radius: 8px !important;
+}
+
+/* Center content */
+.center-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 60px); /* Adjust for header height */
+    padding: 1rem;
+}
+
+.book-form {
+    background-color: var(--card-bg);
+    padding: 2rem;
+    margin: 2rem auto;
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: var(--shadow-light);
+    border-radius: 8px;
+}
+
+form div {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+input[type="text"], textarea, select {
+    width: 100%;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+input[type="text"]:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: var(--shadow-hover);
+}
+
+button {
+    background-color: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+    margin-top: 0.8rem;
+    margin-bottom: 0.5rem; /* Space between buttons */
+}
+
+button:hover {
+    background-color: #b4835f;
+}
+
+a {
+    color: var(--accent-color);
+    text-decoration: none;
+    font-size: 1rem;
+    display: inline-block;
+    margin-top: 0.5rem;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #b4835f;
+}
+
+/* Buttons */
+.action-btn {
+    display: inline-block;
+    margin: 1rem 0;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    text-decoration: none;
+    transition: background-color 0.3s ease;
+}
+
+.action-btn:hover {
+    background-color: #b4835f;
+}
+
+.reset-btn {
+    background-color: #f44336; /* Red color for reset */
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.reset-btn:hover {
+    background-color: #d32f2f; /* Darker red on hover */
+}
+.btn {
+    background-color:  var(--accent-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #b4835f;
+}
+
+/* Aligning buttons */
+.form-actions {
+    display: flex;
+    margin-left: 172px;
+    padding-top: 10px;
+    align-items: center;
+    gap: 10px; /* Space between buttons */
+}
+
+button, .reset-btn {
+    width: 100%; /* Buttons fill the available width */
+    max-width: 100px; /* Limit button size */
+}
+
+/* Grid layout for authors and categories */
+.authors-table, .categories-table {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+    gap: 20px; /* Space between the columns */
+}
+
+.author-col, .category-col {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.author-col label, .category-col label {
+    display: flex;
+    align-items: center;
+}
+
+/* Styling for checkboxes */
+input[type="checkbox"] {
+    margin-right: 8px;
+}
+
+/* Error messages */
+.error {
+    color: red;
+    font-size: 0.875em;
+    margin-top: 5px;
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    form {
+        padding: 1.5rem;
+    }
+
+    header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    /* Adjust the grid for smaller screens */
+    .authors-table, .categories-table {
+        grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
+    }
+}
+
+@media (max-width: 480px) {
+    /* On very small screens, display checkboxes in a single column */
+    .authors-table, .categories-table {
+        grid-template-columns: 1fr; /* 1 column on very small screens */
+    }
+}

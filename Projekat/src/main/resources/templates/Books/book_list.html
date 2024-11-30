@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List</title>
+    <link rel="stylesheet" th:href="@{/css/liste.css}">
+</head>
+<body>
+<header>
+    <h1>Online Biblioteka</h1>
+    <nav class="nav-menu">
+        <a href="#" th:href="@{/start}" class="logout-btn">Nazad</a>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">Odjava</button>
+        </form>
+    </nav>
+</header>
+
+<main>
+    <h1>Lista Knjiga</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Naslov</th>
+            <th>Opis</th>
+            <th>Autor</th>
+            <th>Kategorija</th>
+            <th sec:authorize="hasRole('ROLE_ADMIN')">Uredi / Izbriši</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="book : ${books}">
+            <td th:text="${book.title}">Naslov Knjige</td>
+            <td th:text="${book.description}">Opis</td>
+            <td>
+                <span th:each="author, iterStat : ${book.authors}">
+                    <span th:text="${author.name}">Ime Autora</span>
+                    <span th:if="${!iterStat.last}">, </span>
+                </span>
+            </td>
+            <td>
+                <span th:each="category, iterStat : ${book.categories}">
+                    <span th:text="${category.name}">Kategorija</span>
+                    <span th:if="${!iterStat.last}">, </span>
+                </span>
+            </td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/books/edit/{id}(id=${book.id})}">Uredi</a>
+                <form th:action="@{/books/delete/{id}(id=${book.id})}" method="post" style="display:inline;">
+                    <button type="submit">Izbrisi</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <span sec:authorize="hasRole('ROLE_ADMIN')">
+        <form th:action="@{/books/add}" method="get" style="display: inline;">
+            <button type="submit" class="action-btn">Dodaj Knjigu</button>
+        </form>
+    </span>
+</main>
+
+<footer>
+    &copy; 2024 Online Biblioteka
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dodaj Novu Knjigu</title>
+    <link rel="stylesheet" th:href="@{/css/forme.css}">
+</head>
+<body>
+<header>
+    <h1>Online Biblioteka</h1>
+    <nav class="nav-menu">
+        <a href="#" th:href="@{/books/}" class="logout-btn">Nazad</a>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">Odjava</button>
+        </form>
+    </nav>
+</header>
+
+<main class="center-content">
+    <h1>Dodaj Novu Knjigu</h1>
+
+    <form id="bookForm" th:action="@{/books/add}" th:object="${book}" method="post" class="book-form">
+
+        <div>
+            <label for="title"><b>Naslov:</b></label>
+            <input type="text" id="title" th:field="*{title}" />
+            <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="error">Name Error</div>
+        </div>
+
+        <div>
+            <label for="description"><b>Opis:</b></label>
+            <textarea id="description" th:field="*{description}"></textarea>
+            <div th:if="${#fields.hasErrors('description')}" th:errors="*{description}" class="error">Name Error</div>
+        </div>
+
+        <div>
+            <label><b>Izaberite Autora:</b></label>
+            <div class="authors-table">
+                <div th:each="author : ${authors}" class="author-col">
+                    <label>
+                        <input type="checkbox" th:field="*{authors}" th:value="${author.id}" />
+                        <span th:text="${author.name}"></span>
+                    </label>
+                </div>
+            </div>
+            <div th:if="${#fields.hasErrors('authors')}" class="error">
+                <span th:errors="*{authors}">Izaberite postojećeg autora.</span>
+            </div>
+        </div>
+
+        <a href="#" th:href="@{/authors/add}" class="btn">Dodaj Novog Autora</a>
+
+        <div>
+            <p></p>
+            <label><b>Izaberite Kategoriju:</b></label>
+            <div class="categories-table">
+                <div th:each="category : ${categories}" class="category-col">
+                    <label>
+                        <input type="checkbox" th:field="*{categories}" th:value="${category.id}" />
+                        <span th:text="${category.name}"></span>
+                    </label>
+                </div>
+            </div>
+            <div th:if="${#fields.hasErrors('categories')}" class="error">
+                <span th:errors="*{categories}">Izaberite najmanje jednu kategoriju.</span>
+            </div>
+        </div>
+        <a href="#" th:href="@{/category/add}" class="btn">Dodaj Novu Kategoriju</a>
+
+        <div class="form-actions">
+            <button type="submit">Sačuvaj</button>
+            <a href="#" th:href="@{/books/}" class="reset-btn">Poništi</a>
+        </div>
+    </form>
+</main>
+
+</body>
+</html>

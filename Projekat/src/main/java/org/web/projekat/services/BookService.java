@@ -1,7 +1,11 @@
 package org.web.projekat.services;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.web.projekat.models.Author;
 import org.web.projekat.models.Book;
 import org.web.projekat.repositories.BookRepository;
 
@@ -30,4 +34,7 @@ public class BookService {
         bookRepository.deleteById(id.intValue());
     }
 
+    public boolean existsByTitleAndAuthor(@NotNull @NotEmpty(message="Unesite Naslov") @Size(min = 1, max = 200, message = "Naslov mora biti između 1 i 200 karaktera") String title, Author author) {
+        return bookRepository.existsByTitleAndAuthorsContaining(title, author);
+    }
 }

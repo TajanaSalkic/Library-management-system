@@ -3,30 +3,96 @@
 <head>
     <title>Login</title>
     <link rel="stylesheet" th:href="@{/css/auth.css}">
-
+    <style>
+        .error-message {
+            color: red;
+            font-size: 0.9em;
+            margin-top: 5px;
+        }
+        .alert-error, .alert-success {
+            margin-top: 10px;
+        }
+        .alert-error {
+            color: red;
+        }
+        .alert-success {
+            color: green;
+        }
+    </style>
 </head>
 <body>
-    <div class="auth-container">
+<div class="auth-container">
+    <div class="form-section">
         <h2>Prijava</h2>
-        <form th:action="@{/login}" method="post">
+        <form name="loginForm" th:action="@{/login}" method="post" onsubmit="validateForm(event)">
             <div class="form-group">
-                <input type="text" name="username" placeholder="Korisničko ime" required>
+                <input type="text" name="username" placeholder="Korisničko ime" required oninput="clearErrorMessage()">
+                <div id="usernameError" class="error-message"></div>
             </div>
             <div class="form-group">
-                <input type="password" name="password" placeholder="Lozinka" required>
+                <input type="password" name="password" placeholder="Lozinka" required oninput="clearErrorMessage()">
+                <div id="passwordError" class="error-message"></div>
             </div>
             <button type="submit">Prijavi se</button>
         </form>
         <div class="auth-links">
-            <a th:href="@{/register}">Nemate račun? Registrujte se</a>
+            Nemate račun?<a th:href="@{/register}"> Registrujte se</a>
         </div>
-        <div th:if="${param.error}" class="alert alert-error">
+
+        <div id="formError" th:if="${param.error}" class="alert alert-error">
             Pogrešno korisničko ime ili lozinka
         </div>
-        <div th:if="${param.logout}" class="alert alert-success">
+
+        <div id="formLogout" th:if="${param.logout}" class="alert alert-success">
             Uspješno ste se odjavili
         </div>
+
         <div th:if="${success}" class="alert alert-success" th:text="${success}"></div>
     </div>
+    <div class="image-section">
+        <img src="https://i.pinimg.com/enabled_lo_mid/736x/b4/ab/72/b4ab7222da63b12c06c8e3ba9290bd0b.jpg"
+             alt="Descriptive Text"
+             class="form-image"
+             style="width: 100%; max-width: 1200px; height: auto;">
+    </div>
+</div>
+<script>
+    function validateForm(event) {
+        const username = document.forms["loginForm"]["username"].value;
+        const password = document.forms["loginForm"]["password"].value;
+
+        let isValid = true;
+
+        document.getElementById("usernameError").innerText = '';
+        document.getElementById("passwordError").innerText = '';
+
+        if (username.length < 5) {
+            document.getElementById("usernameError").innerText = "Korisničko ime mora imati najmanje 5 karaktera.";
+            isValid = false;
+        }
+
+        if (password.length < 8) {
+            document.getElementById("passwordError").innerText = "Lozinka mora imati najmanje 8 karaktera.";
+            isValid = false;
+        }
+
+        if (!isValid) {
+            event.preventDefault();
+        }
+    }
+
+    function clearErrorMessage() {
+        const errorElement = document.getElementById("formError");
+        const logoutElement = document.getElementById("formLogout");
+
+        if (errorElement) {
+            errorElement.style.display = "none";
+        }
+
+        if (logoutElement) {
+            logoutElement.style.display = "none";
+        }
+    }
+</script>
 </body>
-</html> 
+</html>

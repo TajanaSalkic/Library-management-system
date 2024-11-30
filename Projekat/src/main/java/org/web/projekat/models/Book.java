@@ -24,12 +24,17 @@ public class Book {
     private Long id;
 
     @NotNull
-    @NotEmpty(message="Please enter a title")
-    @Size(min = 1, max = 200)
+    @NotEmpty(message="Obavezno Polje!")
+    @Size(min = 5, max = 100, message = "Naslov mora biti između 5 i 100 karaktera")
     private String title;
 
+    @NotNull
+    @NotEmpty(message="Obavezno Polje!")
+    @Size(min = 5, max = 200, message = "Opis mora biti između 5 i 200 karaktera")
     @Column(columnDefinition = "TEXT")
     private String description;
+
+
 
     @ManyToMany
     @JoinTable(
@@ -37,6 +42,9 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "author_id")
     )
+
+    @NotEmpty(message = "Izaberi ili unesi novog autora")
+
     private Set<Author> authors = new HashSet<>();
 
     @ManyToMany
@@ -45,6 +53,8 @@ public class Book {
             joinColumns = @JoinColumn(name = "book_id"),
             inverseJoinColumns = @JoinColumn(name = "category_id")
     )
+
+    @NotEmpty(message = "Izaberi najmanje jednu kategoriju")
     private Set<Category> categories = new HashSet<>();
 
 }

@@ -18,16 +18,10 @@ public class SecurityConfig {
 
     private final UserRepository userRepository;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
 
     public SecurityConfig(UserRepository userRepository) {
         this.userRepository = userRepository;
-    }
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
     }
 
     @Bean

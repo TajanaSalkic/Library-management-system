@@ -1,6 +1,7 @@
 package org.web.projekat.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -21,14 +22,14 @@ public class Author {
     private Long id;
 
     @NotNull
-    @NotEmpty(message="Please enter a name")
-    @Size(min = 5, max = 100)
+    @NotBlank(message="Obavezno Polje!")
+    @Size(min = 5, max = 100, message = "Ograničenje 5-200 karaktera")
     private String name;
 
     @ManyToMany(mappedBy = "authors")
     private Set<Book> books = new HashSet<>();
 
-    // Getters and Setters
+    // Getteri i Setteri
 
 
     public Set<Book> getBooks() {

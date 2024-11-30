@@ -26,9 +26,9 @@ public class AdminUserInitializer  implements CommandLineRunner {
             admin.setEmail("admin@gmail.com");
             admin.setRole(Role.ADMIN);
             userRepository.save(admin);
-            System.out.println("Deafult admin user created with username: 'admin' and password: 'admin123'.");
+            System.out.println("Admin user je kreiran sa sljedecim pristupnim podacima: 'admin' and password: 'admin123'.");
         }else{
-            System.out.println("Admin user already exists.");
+            System.out.println("Admin user vec postoji.");
         }
     }
 }

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title sec:authorize="hasRole('ROLE_ADMIN')">Biblioteka - Administrativni Panel</title>
+    <title sec:authorize="hasRole('ROLE_USER')">Biblioteka - Korisnički Panel</title>
+
+    <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+<body>
+    <header>
+        <h1>Online Biblioteka</h1>
+        <nav class="nav-menu">
+
+            <form th:action="@{/logout}" method="post" class="logout-form">
+                <button type="submit" class="logout-btn">Odjava</button>
+            </form>
+        </nav>
+    </header>
+
+    <main>
+        <div class="welcome-section" sec:authorize="hasRole('ROLE_ADMIN')">
+            <h2>Dobrodošli u administrativni panel</h2>
+            <p>Izaberite jednu od opcija za upravljanje:</p>
+        </div>
+
+        <div class="welcome-section" sec:authorize="hasRole('ROLE_USER')">
+            <h2>Dobrodošli u korisnički panel</h2>
+            <p>Izaberite jednu od opcija:</p>
+        </div>
+
+        <div class="admin-cards" sec:authorize="hasRole('ROLE_ADMIN')">
+            <div class="card">
+                <h3>Knjige</h3>
+                <p>Upravljanje knjigama u biblioteci</p>
+                <button onclick="location.href='/books/'">Pristupi</button>
+            </div>
+
+            <div class="card">
+                <h3>Autori</h3>
+                <p>Upravljanje autorima knjiga</p>
+                <button onclick="location.href='/authors/'">Pristupi</button>
+            </div>
+
+            <div class="card">
+                <h3>Kategorije</h3>
+                <p>Upravljanje kategorijama knjiga</p>
+                <button onclick="location.href='/category/'">Pristupi</button>
+            </div>
+        </div>
+
+        <div class="user-cards" sec:authorize="hasRole('ROLE_USER')">
+            <div class="card">
+                <h3>Knjige</h3>
+                <button onclick="location.href='/books/'">Pristupi</button>
+            </div>
+
+            <div class="card">
+                <h3>Autori</h3>
+                <button onclick="location.href='/authors/'">Pristupi</button>
+            </div>
+
+            <div class="card">
+                <h3>Kategorije</h3>
+                <button onclick="location.href='/category/'">Pristupi</button>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Online Biblioteka</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista Kategorija</title>
+    <link rel="stylesheet" th:href="@{/css/liste.css}">
+</head>
+<body>
+<header>
+    <h1>Online Biblioteka</h1>
+    <nav class="nav-menu">
+        <a href="#" th:href="@{/start}" class="logout-btn">Nazad</a>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">Odjava</button>
+        </form>
+    </nav>
+</header>
+
+<main>
+    <div class="add-category-btn-container" style="text-align: center; margin-bottom: 2rem;">
+    <span sec:authorize="hasRole('ROLE_ADMIN')">
+      <a th:href="@{/category/add}" class="action-btn">Dodaj Kategoriju</a>
+    </span>
+    </div>
+
+    <h2>Lista Kategorija</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Naziv</th>
+            <th>Knjiga</th>
+            <th sec:authorize="hasRole('ROLE_ADMIN')">Ažuriraj / Izbriši</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="category : ${categories}">
+            <td th:text="${category.name}">Naziv Kategorije</td>
+            <td>
+                <span th:each="books, iterStat : ${category.books}">
+                    <span th:text="${books.title}">Naslov Knjige</span>
+                    <span th:if="${!iterStat.last}">, </span>
+                </span>
+            </td>
+            <td sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/category/edit/{id}(id=${category.id})}">Ažuriraj</a>
+                <form action="#" th:action="@{/category/delete/{id}(id=${category.id})}" method="post" style="display:inline;">
+                    <button type="submit">Izbriši</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+</body>
+</html>

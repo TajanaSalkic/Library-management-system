@@ -1,6 +1,7 @@
 package org.web.projekat.models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -19,14 +20,14 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message="Please enter a name")
-    @Size(min = 5, max = 100, message = "size must be between 5 and 100")
+    @NotBlank(message="Obavezno Polje!")
+    @Size(min = 5, max = 100, message = "Veličina mora biti između 5 i 100 karaktera!")
     private String name;
 
     @ManyToMany(mappedBy = "categories")
     private Set<Book> books = new HashSet<>();
 
-// Getters and Setters
+// Getteri i Setteri
 
     public Set<Book> getBooks() {
         return books;

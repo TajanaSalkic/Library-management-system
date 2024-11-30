@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+    <meta charset="UTF-8">
+    <title>Book List</title>
+    <link rel="stylesheet" th:href="@{/css/liste.css}">
+</head>
+<body>
+<header>
+    <h1>Online Biblioteka</h1>
+    <nav class="nav-menu">
+        <a href="#" th:href="@{/start}" class="logout-btn">Nazad</a>
+        <form th:action="@{/logout}" method="post" class="logout-form">
+            <button type="submit" class="logout-btn">Odjava</button>
+        </form>
+    </nav>
+</header>
+
+<main>
+    <div class="add-author-btn-container" style="text-align: center; margin-bottom: 2rem;">
+        <span sec:authorize="hasRole('ROLE_ADMIN')">
+            <a th:href="@{/authors/add}" class="action-btn">Dodaj Pisca</a>
+        </span>
+    </div>
+
+    <h2>Lista Autora</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Ime i Prezime</th>
+            <th>Knjiga</th>
+            <th sec:authorize="hasRole('ROLE_ADMIN')">Ažuriraj / Izbriši</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="author : ${authors}">
+            <td th:text="${author.name}">Author name</td>
+            <td>
+                <span th:each="books, iterStat : ${author.books}">
+                    <span th:text="${books.title}">Book Title</span>
+                    <span th:if="${!iterStat.last}">, </span>
+                </span>
+            </td>
+
+            <td sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/authors/edit/{id}(id=${author.id})}" class="action-btn" style="margin-right: 1rem;">Ažuriraj</a>
+                <form action="#" th:action="@{/authors/delete/{id}(id=${author.id})}" method="post" style="display:inline;">
+                    <button type="submit" class="action-btn">Izbriši</button>
+                </form>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</main>
+
+<footer>
+    <p>&copy; 2024 Online Biblioteka</p>
+</footer>
+
+</body>
+</html>
